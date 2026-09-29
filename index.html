@@ -1,0 +1,3353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AVL PORTAL</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+/* =====================================================
+   ROOT
+===================================================== */
+
+:root{
+    --gold:#f6c453;
+    --gold2:#ffdf75;
+    --gold3:#9b6814;
+
+    --blue:#00aaff;
+    --blue2:#006cff;
+
+    --red:#ef3155;
+    --yellow:#ffd21c;
+
+    --bg:#030407;
+    --bg2:#070a10;
+    --panel:rgba(13,16,23,.88);
+
+    --white:#f6f7fa;
+    --muted:#9299a8;
+
+    --border:rgba(255,255,255,.09);
+
+    --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(
+            circle at 50% 10%,
+            rgba(246,196,83,.07),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 10% 80%,
+            rgba(0,120,255,.06),
+            transparent 28%
+        ),
+        var(--bg);
+
+    color:var(--white);
+    font-family:Tajawal,Arial,sans-serif;
+
+    overflow-x:hidden;
+}
+
+/* =====================================================
+   PARTICLES CANVAS
+===================================================== */
+
+#particles{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+
+    z-index:0;
+    pointer-events:none;
+}
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+#intro{
+    position:fixed;
+    inset:0;
+
+    z-index:99999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(246,196,83,.10),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(0,120,255,.07),
+            transparent 35%
+        ),
+        #010204;
+
+    overflow:hidden;
+
+    transition:
+        opacity 1.2s ease,
+        visibility 1.2s ease,
+        transform 1.2s ease;
+}
+
+#intro.hide{
+    opacity:0;
+    visibility:hidden;
+    transform:scale(1.08);
+    pointer-events:none;
+}
+
+/* INTRO LINES */
+
+.intro-line{
+    position:absolute;
+    width:1px;
+    height:100%;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(246,196,83,.12),
+            transparent
+        );
+
+    animation:introLine 4s ease-in-out infinite;
+}
+
+.intro-line:nth-child(1){
+    left:15%;
+}
+
+.intro-line:nth-child(2){
+    left:30%;
+    animation-delay:.5s;
+}
+
+.intro-line:nth-child(3){
+    left:50%;
+    animation-delay:1s;
+}
+
+.intro-line:nth-child(4){
+    left:70%;
+    animation-delay:1.5s;
+}
+
+.intro-line:nth-child(5){
+    left:85%;
+    animation-delay:2s;
+}
+
+@keyframes introLine{
+    0%,100%{
+        opacity:.1;
+    }
+
+    50%{
+        opacity:.5;
+    }
+}
+
+/* INTRO CONTENT */
+
+.intro-content{
+    position:relative;
+    z-index:5;
+
+    text-align:center;
+
+    animation:introAppear 1.2s ease forwards;
+}
+
+@keyframes introAppear{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* =====================================================
+   GOLDEN TROPHY
+===================================================== */
+
+.trophy-stage{
+    position:relative;
+
+    width:320px;
+    height:390px;
+
+    margin:auto;
+}
+
+.trophy-glow{
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,214,90,.28),
+            rgba(255,180,0,.08) 35%,
+            transparent 70%
+        );
+
+    filter:blur(10px);
+
+    animation:trophyGlow 2.8s ease-in-out infinite;
+}
+
+@keyframes trophyGlow{
+
+    0%,100%{
+        transform:translate(-50%,-50%) scale(.9);
+        opacity:.5;
+    }
+
+    50%{
+        transform:translate(-50%,-50%) scale(1.15);
+        opacity:1;
+    }
+
+}
+
+/* SVG TROPHY */
+
+.trophy-svg{
+    position:absolute;
+
+    width:260px;
+    height:330px;
+
+    left:50%;
+    top:20px;
+
+    transform:translateX(-50%);
+
+    overflow:visible;
+
+    filter:
+        drop-shadow(0 0 8px rgba(255,208,70,.45))
+        drop-shadow(0 20px 30px rgba(0,0,0,.7));
+
+    animation:trophyEnter 2.5s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes trophyEnter{
+
+    0%{
+        opacity:0;
+        transform:
+            translateX(-50%)
+            translateY(100px)
+            scale(.55)
+            rotateX(70deg);
+        filter:
+            blur(15px)
+            drop-shadow(0 0 0 transparent);
+    }
+
+    45%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:1;
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1)
+            rotateX(0);
+    }
+
+}
+
+.trophy-piece{
+    opacity:0;
+    transform-origin:center;
+
+    animation:trophyPiece 1.5s ease forwards;
+}
+
+.piece-1{
+    animation-delay:.1s;
+}
+
+.piece-2{
+    animation-delay:.35s;
+}
+
+.piece-3{
+    animation-delay:.6s;
+}
+
+.piece-4{
+    animation-delay:.85s;
+}
+
+.piece-5{
+    animation-delay:1.1s;
+}
+
+@keyframes trophyPiece{
+
+    0%{
+        opacity:0;
+        transform:translateY(-35px) scale(.5);
+    }
+
+    65%{
+        opacity:1;
+        transform:translateY(5px) scale(1.04);
+    }
+
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
+}
+
+/* GOLD SHINE */
+
+.trophy-shine{
+    position:absolute;
+
+    width:260px;
+    height:330px;
+
+    left:50%;
+    top:20px;
+
+    transform:translateX(-50%);
+
+    pointer-events:none;
+
+    overflow:hidden;
+
+    border-radius:40%;
+}
+
+.trophy-shine::after{
+    content:"";
+
+    position:absolute;
+
+    width:45px;
+    height:400px;
+
+    left:-100px;
+    top:-40px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.65),
+            transparent
+        );
+
+    transform:rotate(20deg);
+
+    animation:trophyShine 4s ease-in-out 2.5s infinite;
+}
+
+@keyframes trophyShine{
+
+    0%{
+        left:-100px;
+    }
+
+    45%,100%{
+        left:350px;
+    }
+
+}
+
+/* TROPHY TEXT */
+
+.intro-small{
+    margin-top:-5px;
+
+    color:#9d8c63;
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:10px;
+
+    letter-spacing:6px;
+
+    opacity:0;
+
+    animation:fadeUp 1s ease 2s forwards;
+}
+
+.intro-title{
+
+    margin-top:10px;
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:clamp(42px,8vw,76px);
+
+    font-weight:900;
+
+    letter-spacing:8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #a36c13,
+            #ffe38a,
+            #ffffff,
+            #f3c34f,
+            #a36c13
+        );
+
+    background-size:300% auto;
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+
+    opacity:0;
+
+    animation:
+        titleShow 1.3s ease 2.2s forwards,
+        goldMove 5s linear 3s infinite;
+}
+
+@keyframes titleShow{
+
+    from{
+        opacity:0;
+        transform:scale(.7);
+        filter:blur(12px);
+        letter-spacing:25px;
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+        filter:blur(0);
+        letter-spacing:8px;
+    }
+
+}
+
+@keyframes goldMove{
+
+    to{
+        background-position:300% center;
+    }
+
+}
+
+.intro-subtitle{
+
+    color:#aeb4c0;
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:11px;
+
+    letter-spacing:4px;
+
+    margin-top:3px;
+
+    opacity:0;
+
+    animation:fadeUp 1s ease 2.6s forwards;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* ENTER */
+
+.enter-btn{
+
+    margin-top:30px;
+
+    padding:15px 35px;
+
+    border:1px solid rgba(246,196,83,.65);
+
+    border-radius:5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(246,196,83,.08),
+            rgba(255,255,255,.03)
+        );
+
+    color:#f7d77b;
+
+    font-family:Orbitron,sans-serif;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    cursor:pointer;
+
+    opacity:0;
+
+    animation:fadeUp 1s ease 3s forwards;
+
+    transition:.3s;
+
+    box-shadow:
+        0 0 25px rgba(246,196,83,.06);
+}
+
+.enter-btn:hover{
+
+    color:#fff;
+
+    background:rgba(246,196,83,.13);
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 0 35px rgba(246,196,83,.22);
+
+}
+
+.enter-btn i{
+    margin-left:10px;
+}
+
+/* =====================================================
+   APP
+===================================================== */
+
+#app{
+    position:relative;
+
+    z-index:2;
+
+    min-height:100vh;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:500;
+
+    background:
+        rgba(3,5,9,.86);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.header-inner{
+
+    max-width:1450px;
+
+    margin:auto;
+
+    padding:15px 25px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+/* BRAND */
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.brand-logo{
+
+    width:45px;
+    height:45px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:9px;
+
+    border:
+        1px solid rgba(246,196,83,.35);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(246,196,83,.15),
+            rgba(246,196,83,.02)
+        );
+
+    box-shadow:
+        0 0 25px rgba(246,196,83,.06);
+}
+
+.brand-logo i{
+
+    color:var(--gold2);
+
+    font-size:20px;
+}
+
+.brand h1{
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:19px;
+
+    letter-spacing:2px;
+}
+
+.brand span{
+
+    display:block;
+
+    color:#70798a;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    margin-top:3px;
+}
+
+/* NAV */
+
+.nav{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    flex-wrap:wrap;
+
+    justify-content:flex-end;
+}
+
+.nav-btn{
+
+    border:
+        1px solid transparent;
+
+    background:transparent;
+
+    color:#7f8999;
+
+    padding:11px 15px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-family:Tajawal,sans-serif;
+
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.nav-btn i{
+    margin-left:7px;
+}
+
+.nav-btn:hover{
+
+    color:#fff;
+
+    background:rgba(255,255,255,.035);
+}
+
+.nav-btn.active{
+
+    color:var(--gold2);
+
+    border-color:
+        rgba(246,196,83,.25);
+
+    background:
+        rgba(246,196,83,.06);
+
+    box-shadow:
+        0 0 20px rgba(246,196,83,.04);
+}
+
+/* LANGUAGE */
+
+.language-switcher{
+
+    display:flex;
+
+    gap:4px;
+
+    padding:4px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:7px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.lang-btn{
+
+    border:0;
+
+    background:transparent;
+
+    color:#727d90;
+
+    padding:7px 9px;
+
+    border-radius:4px;
+
+    cursor:pointer;
+
+    font-size:11px;
+
+    font-family:Orbitron,sans-serif;
+
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.lang-btn:hover{
+    color:#fff;
+}
+
+.lang-btn.active{
+
+    color:#111;
+
+    background:var(--gold);
+
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+
+    max-width:1450px;
+
+    margin:auto;
+
+    padding:45px 25px 80px;
+}
+
+.page{
+
+    display:none;
+
+    animation:pageIn .55s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes pageIn{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* HEADING */
+
+.page-heading{
+
+    margin-bottom:25px;
+}
+
+.eyebrow{
+
+    color:var(--gold);
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:10px;
+
+    letter-spacing:3px;
+
+    margin-bottom:9px;
+}
+
+.page-heading h2{
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:clamp(28px,5vw,45px);
+
+    letter-spacing:2px;
+}
+
+.page-heading p{
+
+    color:var(--muted);
+
+    margin-top:9px;
+
+    line-height:1.7;
+
+    max-width:850px;
+}
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-box{
+
+    position:relative;
+
+    max-width:620px;
+
+    margin-bottom:23px;
+}
+
+.search-box i{
+
+    position:absolute;
+
+    left:17px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#626c7c;
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:14px 18px 14px 45px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:8px;
+
+    outline:none;
+
+    background:
+        rgba(10,13,20,.8);
+
+    color:#fff;
+
+    font-family:Tajawal,sans-serif;
+
+    transition:.25s;
+}
+
+.search-box input:focus{
+
+    border-color:
+        rgba(246,196,83,.4);
+
+    box-shadow:
+        0 0 25px rgba(246,196,83,.05);
+}
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-wrap{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:12px;
+
+    background:
+        rgba(7,10,16,.75);
+
+    box-shadow:var(--shadow);
+}
+
+table{
+
+    width:100%;
+
+    min-width:850px;
+
+    border-collapse:collapse;
+}
+
+thead{
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(246,196,83,.09),
+            rgba(255,255,255,.025)
+        );
+}
+
+th{
+
+    padding:17px 16px;
+
+    text-align:left;
+
+    color:#c5b071;
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:10px;
+
+    letter-spacing:1.5px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    white-space:nowrap;
+}
+
+td{
+
+    padding:17px 16px;
+
+    color:#bdc5d1;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.045);
+
+    vertical-align:top;
+
+    line-height:1.65;
+
+    font-size:14px;
+}
+
+tbody tr{
+
+    transition:.25s;
+}
+
+tbody tr:hover{
+
+    background:
+        rgba(246,196,83,.035);
+}
+
+tbody tr:last-child td{
+    border-bottom:0;
+}
+
+.reason{
+
+    min-width:220px;
+
+    color:#fff;
+
+    font-weight:800;
+}
+
+.ban-content{
+
+    white-space:pre-line;
+}
+
+.first{
+    color:#86d7ff;
+}
+
+.second{
+    color:#ffd16c;
+}
+
+.third{
+    color:#ff738c;
+}
+
+.offense{
+
+    color:#f1f3f7;
+
+    font-weight:700;
+}
+
+.na{
+    color:#626d7d;
+}
+
+.suspension{
+
+    color:#f6cc65;
+
+    font-weight:800;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.code{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:48px;
+
+    padding:6px 9px;
+
+    border-radius:5px;
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:11px;
+
+    font-weight:900;
+}
+
+.code.yellow{
+
+    color:#171300;
+
+    background:var(--yellow);
+
+    box-shadow:
+        0 0 15px rgba(255,210,28,.12);
+}
+
+.code.red{
+
+    color:#fff;
+
+    background:var(--red);
+
+    box-shadow:
+        0 0 15px rgba(239,49,85,.15);
+}
+
+/* =====================================================
+   LEGEND
+===================================================== */
+
+.legend{
+
+    margin-top:20px;
+
+    padding:18px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:10px;
+
+    background:
+        rgba(10,13,20,.65);
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px 25px;
+}
+
+.legend-title{
+
+    width:100%;
+
+    color:#778194;
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+}
+
+.legend-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#abb4c3;
+
+    font-size:13px;
+}
+
+.star{
+
+    color:var(--yellow);
+
+    font-size:18px;
+}
+
+/* =====================================================
+   NOTE
+===================================================== */
+
+.note{
+
+    margin-top:23px;
+
+    padding:18px 20px;
+
+    border-left:
+        3px solid var(--gold);
+
+    border-radius:0 9px 9px 0;
+
+    background:
+        rgba(246,196,83,.045);
+
+    color:#9aa4b3;
+
+    line-height:1.8;
+}
+
+.note strong{
+    color:#fff;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+
+    position:relative;
+
+    z-index:2;
+
+    border-top:
+        1px solid var(--border);
+
+    padding:27px 20px;
+
+    text-align:center;
+
+    color:#596476;
+
+    font-size:11px;
+
+    letter-spacing:1px;
+}
+
+.footer strong{
+    color:#9ba5b4;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:900px){
+
+    .header-inner{
+
+        flex-direction:column;
+
+        align-items:stretch;
+    }
+
+    .brand{
+
+        justify-content:center;
+    }
+
+    .nav{
+
+        justify-content:center;
+    }
+
+    .language-switcher{
+
+        justify-content:center;
+    }
+
+    .nav-btn{
+
+        flex:1;
+
+        min-width:140px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .main{
+
+        padding:
+            30px 12px 60px;
+    }
+
+    .header-inner{
+
+        padding:
+            13px 12px;
+    }
+
+    .brand h1{
+        font-size:16px;
+    }
+
+    .brand span{
+        font-size:8px;
+    }
+
+    .nav-btn{
+
+        min-width:110px;
+
+        font-size:11px;
+
+        padding:10px 7px;
+    }
+
+    .nav-btn i{
+        margin-left:4px;
+    }
+
+    .trophy-stage{
+
+        transform:scale(.78);
+
+        margin-top:-30px;
+
+        margin-bottom:-35px;
+    }
+
+    .intro-title{
+
+        font-size:38px;
+
+        letter-spacing:5px;
+    }
+
+    .intro-subtitle{
+
+        font-size:8px;
+
+        letter-spacing:2px;
+    }
+
+    .intro-small{
+
+        font-size:8px;
+
+        letter-spacing:4px;
+    }
+
+    .enter-btn{
+
+        font-size:10px;
+
+        padding:13px 25px;
+    }
+
+}
+
+/* =====================================================
+   RTL
+===================================================== */
+
+body.rtl{
+
+    direction:rtl;
+}
+
+body.rtl th,
+body.rtl td{
+
+    text-align:right;
+}
+
+body.rtl .search-box i{
+
+    left:auto;
+
+    right:17px;
+}
+
+body.rtl .search-box input{
+
+    padding:
+        14px 45px 14px 18px;
+}
+
+body.rtl .nav-btn i{
+
+    margin-left:0;
+
+    margin-right:7px;
+}
+
+body.rtl .enter-btn i{
+
+    margin-left:0;
+
+    margin-right:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<section id="intro">
+
+    <div class="intro-line"></div>
+    <div class="intro-line"></div>
+    <div class="intro-line"></div>
+    <div class="intro-line"></div>
+    <div class="intro-line"></div>
+
+    <div class="intro-content">
+
+        <div class="trophy-stage">
+
+            <div class="trophy-glow"></div>
+
+            <svg
+                class="trophy-svg"
+                viewBox="0 0 260 330"
+                xmlns="http://www.w3.org/2000/svg">
+
+                <defs>
+
+                    <linearGradient
+                        id="goldGradient"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1">
+
+                        <stop offset="0%" stop-color="#8d5a12"/>
+                        <stop offset="25%" stop-color="#ffe58a"/>
+                        <stop offset="50%" stop-color="#c48a20"/>
+                        <stop offset="75%" stop-color="#fff0a5"/>
+                        <stop offset="100%" stop-color="#8d5a12"/>
+
+                    </linearGradient>
+
+                    <linearGradient
+                        id="goldDark"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1">
+
+                        <stop offset="0%" stop-color="#ffdc66"/>
+                        <stop offset="50%" stop-color="#a86e14"/>
+                        <stop offset="100%" stop-color="#633b08"/>
+
+                    </linearGradient>
+
+                    <filter id="goldGlow">
+
+                        <feGaussianBlur
+                            stdDeviation="2"
+                            result="blur"/>
+
+                        <feMerge>
+
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+
+                        </feMerge>
+
+                    </filter>
+
+                </defs>
+
+
+                <!-- LEFT HANDLE -->
+
+                <path
+                    class="trophy-piece piece-1"
+                    d="M70 75
+                       C32 72, 20 92, 28 119
+                       C35 145, 57 153, 82 143
+                       L82 127
+                       C61 135, 48 127, 46 111
+                       C43 96, 54 91, 73 93 Z"
+                    fill="url(#goldDark)"
+                    stroke="#ffe07a"
+                    stroke-width="2"
+                    filter="url(#goldGlow)"
+                />
+
+
+                <!-- RIGHT HANDLE -->
+
+                <path
+                    class="trophy-piece piece-2"
+                    d="M190 75
+                       C228 72, 240 92, 232 119
+                       C225 145, 203 153, 178 143
+                       L178 127
+                       C199 135, 212 127, 214 111
+                       C217 96, 206 91, 187 93 Z"
+                    fill="url(#goldDark)"
+                    stroke="#ffe07a"
+                    stroke-width="2"
+                    filter="url(#goldGlow)"
+                />
+
+
+                <!-- CUP -->
+
+                <path
+                    class="trophy-piece piece-3"
+                    d="M69 57
+                       L191 57
+                       L178 133
+                       C173 164, 151 187, 130 191
+                       C109 187, 87 164, 82 133 Z"
+                    fill="url(#goldGradient)"
+                    stroke="#ffe28a"
+                    stroke-width="2"
+                    filter="url(#goldGlow)"
+                />
+
+
+                <!-- CUP INNER -->
+
+                <path
+                    class="trophy-piece piece-4"
+                    d="M82 69
+                       L178 69
+                       L170 125
+                       C166 149, 148 166, 130 171
+                       C112 166, 94 149, 90 125 Z"
+                    fill="rgba(95,57,6,.35)"
+                    stroke="rgba(255,232,145,.4)"
+                    stroke-width="1"
+                />
+
+
+                <!-- STEM -->
+
+                <path
+                    class="trophy-piece piece-5"
+                    d="M115 181
+                       L145 181
+                       L145 234
+                       L115 234 Z"
+                    fill="url(#goldDark)"
+                    stroke="#ffe28a"
+                    stroke-width="2"
+                    filter="url(#goldGlow)"
+                />
+
+
+                <!-- BASE -->
+
+                <path
+                    class="trophy-piece piece-5"
+                    d="M88 230
+                       L172 230
+                       L184 249
+                       L76 249 Z"
+                    fill="url(#goldGradient)"
+                    stroke="#ffe28a"
+                    stroke-width="2"
+                    filter="url(#goldGlow)"
+                />
+
+                <path
+                    class="trophy-piece piece-5"
+                    d="M76 249
+                       L184 249
+                       L198 270
+                       L62 270 Z"
+                    fill="url(#goldDark)"
+                    stroke="#ffe28a"
+                    stroke-width="2"
+                    filter="url(#goldGlow)"
+                />
+
+                <!-- STAR -->
+
+                <path
+                    class="trophy-piece piece-5"
+                    d="M130 88
+                       L136 104
+                       L153 104
+                       L139 114
+                       L144 131
+                       L130 121
+                       L116 131
+                       L121 114
+                       L107 104
+                       L124 104 Z"
+                    fill="#fff0a0"
+                    opacity=".9"
+                />
+
+            </svg>
+
+            <div class="trophy-shine"></div>
+
+        </div>
+
+
+        <div class="intro-small"
+             data-i18n="introSmall">
+            OFFICIAL COMPETITION
+        </div>
+
+        <div class="intro-title">
+            AVL
+        </div>
+
+        <div class="intro-subtitle"
+             data-i18n="leagueName">
+            ARABIC VIRTUAL LEAGUE
+        </div>
+
+        <button class="enter-btn" id="enterBtn">
+
+            <span data-i18n="enter">
+                ENTER PORTAL
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<div id="app">
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <div>
+                <h1>AVL PORTAL</h1>
+
+                <span data-i18n="official">
+                    OFFICIAL COMPETITION REGULATIONS
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="nav">
+
+            <button
+                class="nav-btn active"
+                data-page="suspensions">
+
+                <i class="fa-solid fa-ban"></i>
+
+                <span data-i18n="suspensions">
+                    Suspensions
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-page="offences">
+
+                <i class="fa-solid fa-square-exclamation"></i>
+
+                <span data-i18n="offences">
+                    In-Match Offences
+                </span>
+
+            </button>
+
+
+            <div class="language-switcher">
+
+                <button
+                    class="lang-btn"
+                    data-lang="ar">
+                    AR
+                </button>
+
+                <button
+                    class="lang-btn"
+                    data-lang="fr">
+                    FR
+                </button>
+
+                <button
+                    class="lang-btn active"
+                    data-lang="en">
+                    EN
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="main">
+
+<!-- =====================================================
+     SUSPENSIONS
+===================================================== -->
+
+<section
+    class="page active"
+    id="suspensions">
+
+    <div class="page-heading">
+
+        <div
+            class="eyebrow"
+            data-i18n="disciplinary">
+            AVL PORTAL / DISCIPLINARY
+        </div>
+
+        <h2 data-i18n="suspensionsTitle">
+            SUSPENSIONS
+        </h2>
+
+        <p data-i18n="suspensionsDesc">
+            Official disciplinary sanctions and penalties applicable within the Arabic Virtual League.
+        </p>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            id="suspensionSearch"
+            type="text"
+            data-placeholder="searchSuspensions"
+            placeholder="Search ban reason or punishment...">
+
+    </div>
+
+
+    <div class="table-wrap">
+
+        <table id="suspensionTable">
+
+            <thead>
+
+                <tr>
+
+                    <th data-i18n="banReason">
+                        BAN REASON
+                    </th>
+
+                    <th data-i18n="bail">
+                        BAIL / PUNISHMENT
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="suspensionBody"></tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="note">
+
+        <strong data-i18n="noteTitle">
+            Note:
+        </strong>
+
+        <span data-i18n="noteText">
+            All Punishments will be mentioned in sanctions channel in the official server Discord of AVL.
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     OFFENCES
+===================================================== -->
+
+<section
+    class="page"
+    id="offences">
+
+    <div class="page-heading">
+
+        <div
+            class="eyebrow"
+            data-i18n="matchDiscipline">
+            AVL PORTAL / MATCH DISCIPLINE
+        </div>
+
+        <h2 data-i18n="offencesTitle">
+            IN-MATCH OFFENCES
+        </h2>
+
+        <p data-i18n="offencesDesc">
+            Yellow and red card offences and their automatic suspension rules during AVL matches.
+        </p>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            id="offenceSearch"
+            type="text"
+            data-placeholder="searchOffences"
+            placeholder="Search offence or card code...">
+
+    </div>
+
+
+    <div class="table-wrap">
+
+        <table id="offenceTable">
+
+            <thead>
+
+                <tr>
+
+                    <th data-i18n="code">
+                        CODE
+                    </th>
+
+                    <th data-i18n="offense">
+                        OFFENSE
+                    </th>
+
+                    <th data-i18n="automatic">
+                        AUTOMATIC SUSPENSION
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="offenceBody"></tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="legend">
+
+        <div
+            class="legend-title"
+            data-i18n="legend">
+            LEGEND
+        </div>
+
+
+        <div class="legend-item">
+
+            <span class="star">*</span>
+
+            <span data-i18n="warning">
+                WARN PLAYER ONCE BEFORE GIVING OUT YELLOW CARD
+            </span>
+
+        </div>
+
+
+        <div class="legend-item">
+
+            <span class="code yellow">
+                Y
+            </span>
+
+            <span data-i18n="yellowCard">
+                YELLOW CARD
+            </span>
+
+        </div>
+
+
+        <div class="legend-item">
+
+            <span class="code red">
+                R
+            </span>
+
+            <span data-i18n="redCard">
+                RED CARD
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer class="footer">
+
+    <strong>AVL PORTAL</strong>
+
+    &nbsp;•&nbsp;
+
+    <span data-i18n="footer">
+        ARABIC VIRTUAL LEAGUE • OFFICIAL REGULATIONS
+    </span>
+
+</footer>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   TRANSLATIONS
+===================================================== */
+
+const translations = {
+
+    en: {
+
+        introSmall:"OFFICIAL COMPETITION",
+        leagueName:"ARABIC VIRTUAL LEAGUE",
+        enter:"ENTER PORTAL",
+
+        official:"OFFICIAL COMPETITION REGULATIONS",
+
+        suspensions:"Suspensions",
+        offences:"In-Match Offences",
+
+        disciplinary:"AVL PORTAL / DISCIPLINARY",
+        suspensionsTitle:"SUSPENSIONS",
+        suspensionsDesc:
+        "Official disciplinary sanctions and penalties applicable within the Arabic Virtual League.",
+
+        banReason:"BAN REASON",
+        bail:"BAIL / PUNISHMENT",
+
+        searchSuspensions:
+        "Search ban reason or punishment...",
+
+        matchDiscipline:
+        "AVL PORTAL / MATCH DISCIPLINE",
+
+        offencesTitle:"IN-MATCH OFFENCES",
+
+        offencesDesc:
+        "Yellow and red card offences and their automatic suspension rules during AVL matches.",
+
+        searchOffences:
+        "Search offence or card code...",
+
+        code:"CODE",
+        offense:"OFFENSE",
+        automatic:"AUTOMATIC SUSPENSION",
+
+        legend:"LEGEND",
+
+        warning:
+        "WARN PLAYER ONCE BEFORE GIVING OUT YELLOW CARD",
+
+        yellowCard:"YELLOW CARD",
+        redCard:"RED CARD",
+
+        noteTitle:"Note:",
+
+        noteText:
+        "All Punishments will be mentioned in sanctions channel in the official server Discord of AVL.",
+
+        footer:
+        "ARABIC VIRTUAL LEAGUE • OFFICIAL REGULATIONS",
+
+        first:"First offence:",
+        second:"Second offence:",
+        third:"Third offence:",
+
+        permanent:"Permanent Suspension",
+
+        oneGame:"1 GAME",
+        threeGames:"3 GAMES",
+
+        varies:
+        "VARIES IN SEVERITY OF OFFENCE AND FA DISCRETION"
+
+    },
+
+
+    fr: {
+
+        introSmall:"COMPÉTITION OFFICIELLE",
+        leagueName:"ARABIC VIRTUAL LEAGUE",
+        enter:"ACCÉDER AU PORTAIL",
+
+        official:"RÈGLEMENTS OFFICIELS DE LA COMPÉTITION",
+
+        suspensions:"Suspensions",
+        offences:"Infractions en match",
+
+        disciplinary:"AVL PORTAL / DISCIPLINAIRE",
+        suspensionsTitle:"SUSPENSIONS",
+
+        suspensionsDesc:
+        "Sanctions disciplinaires et pénalités officielles applicables au sein de l'Arabic Virtual League.",
+
+        banReason:"MOTIF DE SANCTION",
+        bail:"SANCTION / PÉNALITÉ",
+
+        searchSuspensions:
+        "Rechercher une infraction ou une sanction...",
+
+        matchDiscipline:
+        "AVL PORTAL / DISCIPLINE DE MATCH",
+
+        offencesTitle:"INFRACTIONS EN MATCH",
+
+        offencesDesc:
+        "Infractions entraînant des cartons jaunes ou rouges et leurs suspensions automatiques pendant les matchs AVL.",
+
+        searchOffences:
+        "Rechercher une infraction ou un code...",
+
+        code:"CODE",
+        offense:"INFRACTION",
+        automatic:"SUSPENSION AUTOMATIQUE",
+
+        legend:"LÉGENDE",
+
+        warning:
+        "AVERTIR LE JOUEUR UNE FOIS AVANT DE DONNER UN CARTON JAUNE",
+
+        yellowCard:"CARTON JAUNE",
+        redCard:"CARTON ROUGE",
+
+        noteTitle:"Note :",
+
+        noteText:
+        "Toutes les sanctions seront mentionnées dans le canal sanctions du serveur Discord officiel de l'AVL.",
+
+        footer:
+        "ARABIC VIRTUAL LEAGUE • RÈGLEMENTS OFFICIELS",
+
+        first:"Première infraction :",
+        second:"Deuxième infraction :",
+        third:"Troisième infraction :",
+
+        permanent:"Suspension permanente",
+
+        oneGame:"1 MATCH",
+        threeGames:"3 MATCHS",
+
+        varies:
+        "VARIE SELON LA GRAVITÉ DE L'INFRACTION ET LA DISCRÉTION DE LA FA"
+    },
+
+
+    ar: {
+
+        introSmall:"المسابقة الرسمية",
+        leagueName:"الدوري الافتراضي العربي",
+        enter:"دخول البوابة",
+
+        official:"القوانين الرسمية للمسابقة",
+
+        suspensions:"العقوبات",
+        offences:"المخالفات أثناء المباراة",
+
+        disciplinary:"بوابة AVL / الانضباط",
+
+        suspensionsTitle:"العقوبات",
+
+        suspensionsDesc:
+        "العقوبات والتدابير التأديبية الرسمية المعمول بها داخل الدوري الافتراضي العربي.",
+
+        banReason:"سبب العقوبة",
+        bail:"العقوبة / الجزاء",
+
+        searchSuspensions:
+        "ابحث عن المخالفة أو العقوبة...",
+
+        matchDiscipline:
+        "بوابة AVL / انضباط المباريات",
+
+        offencesTitle:"المخالفات أثناء المباراة",
+
+        offencesDesc:
+        "المخالفات التي تؤدي إلى البطاقات الصفراء والحمراء والعقوبات التلقائية أثناء مباريات AVL.",
+
+        searchOffences:
+        "ابحث عن المخالفة أو رمز البطاقة...",
+
+        code:"الرمز",
+        offense:"المخالفة",
+        automatic:"العقوبة التلقائية",
+
+        legend:"دليل الرموز",
+
+        warning:
+        "يجب تحذير اللاعب مرة واحدة قبل منحه البطاقة الصفراء",
+
+        yellowCard:"بطاقة صفراء",
+        redCard:"بطاقة حمراء",
+
+        noteTitle:"ملاحظة:",
+
+        noteText:
+        "سيتم ذكر جميع العقوبات في قناة العقوبات داخل سيرفر Discord الرسمي لـ AVL.",
+
+        footer:
+        "الدوري الافتراضي العربي • القوانين الرسمية",
+
+        first:"المخالفة الأولى:",
+        second:"المخالفة الثانية:",
+        third:"المخالفة الثالثة:",
+
+        permanent:"إيقاف دائم",
+
+        oneGame:"مباراة واحدة",
+        threeGames:"3 مباريات",
+
+        varies:
+        "تختلف حسب خطورة المخالفة ووفقاً لتقدير الإدارة"
+    }
+
+};
+
+
+/* =====================================================
+   SUSPENSIONS DATA
+===================================================== */
+
+const suspensionData = [
+
+{
+reason:{
+en:"Racism / Sexism / Homophobia",
+fr:"Racisme / Sexisme / Homophobie",
+ar:"العنصرية / التمييز الجنسي / رهاب المثلية"
+},
+
+punishments:{
+en:[
+"First offence: 1000R$ / 8WB",
+"Second offence: 2 week minimum suspension + 2000R$ / 16WB + 1 week T.S.",
+"Third offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : 1000R$ / 8WB",
+"Deuxième infraction : suspension minimum de 2 semaines + 2000R$ / 16WB + 1 semaine T.S.",
+"Troisième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: 1000R$ / 8WB",
+"المخالفة الثانية: إيقاف لمدة أسبوعين على الأقل + 2000R$ / 16WB + أسبوع T.S.",
+"المخالفة الثالثة: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"Toxicity",
+fr:"Toxicité",
+ar:"السلوك السام"
+},
+
+punishments:{
+en:[
+"First offence: 500R$ / 7WB + 48h Discord Mute",
+"Second offence: 1600R$ / 14WB + 72h Discord Mute",
+"Third offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : 500R$ / 7WB + mute Discord 48h",
+"Deuxième infraction : 1600R$ / 14WB + mute Discord 72h",
+"Troisième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: 500R$ / 7WB + كتم Discord لمدة 48 ساعة",
+"المخالفة الثانية: 1600R$ / 14WB + كتم Discord لمدة 72 ساعة",
+"المخالفة الثالثة: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"Admin Abuse",
+fr:"Abus d'administration",
+ar:"إساءة استعمال صلاحيات الإدارة"
+},
+
+punishments:{
+en:[
+"First offence: 1000R$ / 10WB",
+"Second offence: 2000R$ / 20WB + 1 Week T.S.",
+"Third offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : 1000R$ / 10WB",
+"Deuxième infraction : 2000R$ / 20WB + 1 semaine T.S.",
+"Troisième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: 1000R$ / 10WB",
+"المخالفة الثانية: 2000R$ / 20WB + أسبوع T.S.",
+"المخالفة الثالثة: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"Doxxing",
+fr:"Doxxing",
+ar:"كشف المعلومات الشخصية"
+},
+
+punishments:{
+en:["First offence: Permanent Suspension"],
+fr:["Première infraction : suspension permanente"],
+ar:["المخالفة الأولى: إيقاف دائم"]
+}
+
+},
+
+{
+reason:{
+en:"Collusion",
+fr:"Collusion",
+ar:"التواطؤ"
+},
+
+punishments:{
+en:[
+"First offence: 1000R$ / 10WB + 1 week G.S",
+"Second offence: 2000R$ / 20WB + 1 week G.S",
+"Third offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : 1000R$ / 10WB + 1 semaine G.S",
+"Deuxième infraction : 2000R$ / 20WB + 1 semaine G.S",
+"Troisième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: 1000R$ / 10WB + أسبوع G.S",
+"المخالفة الثانية: 2000R$ / 20WB + أسبوع G.S",
+"المخالفة الثالثة: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"DM Advertising",
+fr:"Publicité par DM",
+ar:"الإشهار عبر الرسائل الخاصة"
+},
+
+punishments:{
+en:[
+"First offence: Warning",
+"Second offence: 400R$ / 4WB",
+"Third offence: 800R$ / 8WB"
+],
+fr:[
+"Première infraction : avertissement",
+"Deuxième infraction : 400R$ / 4WB",
+"Troisième infraction : 800R$ / 8WB"
+],
+ar:[
+"المخالفة الأولى: تحذير",
+"المخالفة الثانية: 400R$ / 4WB",
+"المخالفة الثالثة: 800R$ / 8WB"
+]
+}
+
+},
+
+{
+reason:{
+en:"Exploiting",
+fr:"Exploitation de bugs",
+ar:"استغلال الثغرات"
+},
+
+punishments:{
+en:[
+"First offence: 2 week minimum suspension + 2500R$ / 25WB + 1 month Temporary Suspension",
+"Second offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : suspension minimum de 2 semaines + 2500R$ / 25WB + 1 mois de suspension temporaire",
+"Deuxième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: إيقاف لمدة أسبوعين على الأقل + 2500R$ / 25WB + إيقاف مؤقت لمدة شهر",
+"المخالفة الثانية: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"Knowledge of Exploits",
+fr:"Connaissance des exploits",
+ar:"معرفة الثغرات واستغلالها"
+},
+
+punishments:{
+en:[
+"First offence: 1500R$ / 15WB + 2 week Temporary Suspension",
+"Second offence: 4000R$ / 40WB + 3 week month Temporary Suspension",
+"Third offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : 1500R$ / 15WB + 2 semaines de suspension temporaire",
+"Deuxième infraction : 4000R$ / 40WB + 3 semaines de suspension temporaire",
+"Troisième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: 1500R$ / 15WB + إيقاف مؤقت لمدة أسبوعين",
+"المخالفة الثانية: 4000R$ / 40WB + إيقاف مؤقت لمدة 3 أسابيع",
+"المخالفة الثالثة: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"Illegal Player",
+fr:"Joueur illégal",
+ar:"لاعب غير قانوني"
+},
+
+punishments:{
+en:[
+"First offence: 500R$ / 5WB",
+"Second offence: 1000R$ / 10WB",
+"Third offence: Player Permanent Suspension",
+"(THE CLUB THAT THE PLAYER PLAYED FOR WILL BE SANCTIONED IF THEY WERE AWARE)"
+],
+fr:[
+"Première infraction : 500R$ / 5WB",
+"Deuxième infraction : 1000R$ / 10WB",
+"Troisième infraction : suspension permanente du joueur",
+"(LE CLUB POUR LEQUEL LE JOUEUR A JOUÉ SERA SANCTIONNÉ S'IL EN AVAIT CONNAISSANCE)"
+],
+ar:[
+"المخالفة الأولى: 500R$ / 5WB",
+"المخالفة الثانية: 1000R$ / 10WB",
+"المخالفة الثالثة: إيقاف دائم للاعب",
+"(سيتم معاقبة النادي الذي لعب له اللاعب إذا كان على علم بذلك)"
+]
+}
+
+},
+
+{
+reason:{
+en:"Alting",
+fr:"Alting",
+ar:"استخدام حساب بديل"
+},
+
+punishments:{
+en:[
+"First offence: 2 week minimum suspension + 1500R$ / 25WB + 2 week Temporary Suspension",
+"Second offence: 1 month minimum suspension + 4000R$ / 25WB + 1 month Temporary Suspension",
+"Third offence: Permanent Suspension",
+"(THE CLUB THAT THE PLAYER ALTED FOR WILL BE SANCTIONED IF THEY WERE AWARE)"
+],
+fr:[
+"Première infraction : suspension minimum de 2 semaines + 1500R$ / 25WB + 2 semaines de suspension temporaire",
+"Deuxième infraction : suspension minimum de 1 mois + 4000R$ / 25WB + 1 mois de suspension temporaire",
+"Troisième infraction : suspension permanente",
+"(LE CLUB POUR LEQUEL LE JOUEUR A UTILISÉ LE COMPTE ALTERNATIF SERA SANCTIONNÉ S'IL EN AVAIT CONNAISSANCE)"
+],
+ar:[
+"المخالفة الأولى: إيقاف لمدة أسبوعين على الأقل + 1500R$ / 25WB + إيقاف مؤقت لمدة أسبوعين",
+"المخالفة الثانية: إيقاف لمدة شهر على الأقل + 4000R$ / 25WB + إيقاف مؤقت لمدة شهر",
+"المخالفة الثالثة: إيقاف دائم",
+"(سيتم معاقبة النادي الذي استخدم اللاعب الحساب البديل لصالحه إذا كان على علم بذلك)"
+]
+}
+
+},
+
+{
+reason:{
+en:"Account Sharing",
+fr:"Partage de compte",
+ar:"مشاركة الحساب"
+},
+
+punishments:{
+en:[
+"First offence: 2000R$ / 20WB + 2 week Temporary Suspension",
+"Second offence: 4000R$ / 40WB + 2 month Temporary Suspension",
+"Third offence: Permanent Suspension",
+"(THE CLUB THAT THE PLAYER ALTED FOR WILL BE SANCTIONED IF THEY WERE AWARE)"
+],
+fr:[
+"Première infraction : 2000R$ / 20WB + 2 semaines de suspension temporaire",
+"Deuxième infraction : 4000R$ / 40WB + 2 mois de suspension temporaire",
+"Troisième infraction : suspension permanente",
+"(LE CLUB POUR LEQUEL LE JOUEUR A UTILISÉ LE COMPTE ALTERNATIF SERA SANCTIONNÉ S'IL EN AVAIT CONNAISSANCE)"
+],
+ar:[
+"المخالفة الأولى: 2000R$ / 20WB + إيقاف مؤقت لمدة أسبوعين",
+"المخالفة الثانية: 4000R$ / 40WB + إيقاف مؤقت لمدة شهرين",
+"المخالفة الثالثة: إيقاف دائم",
+"(سيتم معاقبة النادي الذي استخدم اللاعب الحساب البديل لصالحه إذا كان على علم بذلك)"
+]
+}
+
+},
+
+{
+reason:{
+en:"Knowledge of Account Sharing",
+fr:"Connaissance du partage de compte",
+ar:"معرفة مشاركة الحساب"
+},
+
+punishments:{
+en:[
+"First offence: 1500R$ / 15WB + 1 week Temporary Suspension",
+"Second offence: 3000R$ / 30WB + 2 month Temporary Suspension",
+"Third offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : 1500R$ / 15WB + 1 semaine de suspension temporaire",
+"Deuxième infraction : 3000R$ / 30WB + 2 mois de suspension temporaire",
+"Troisième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: 1500R$ / 15WB + إيقاف مؤقت لمدة أسبوع",
+"المخالفة الثانية: 3000R$ / 30WB + إيقاف مؤقت لمدة شهرين",
+"المخالفة الثالثة: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"Threatening to Doxx",
+fr:"Menace de doxxing",
+ar:"التهديد بكشف المعلومات الشخصية"
+},
+
+punishments:{
+en:[
+"First offence: 2000R$ / 20WB",
+"Second offence: 4000R$ / 40WB + 2 week Temporary Suspension",
+"Third offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : 2000R$ / 20WB",
+"Deuxième infraction : 4000R$ / 40WB + 2 semaines de suspension temporaire",
+"Troisième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: 2000R$ / 20WB",
+"المخالفة الثانية: 4000R$ / 40WB + إيقاف مؤقت لمدة أسبوعين",
+"المخالفة الثالثة: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"NSFW",
+fr:"NSFW",
+ar:"محتوى NSFW"
+},
+
+punishments:{
+en:[
+"First offence: 2500R$ / 25WB + 2 week Temporary Suspension + Image Permissions Permanent Ban",
+"Second offence: 5000RS / 50WB + 2 week Temporary Suspension",
+"Third offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : 2500R$ / 25WB + 2 semaines de suspension temporaire + interdiction permanente des permissions d'image",
+"Deuxième infraction : 5000RS / 50WB + 2 semaines de suspension temporaire",
+"Troisième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: 2500R$ / 25WB + إيقاف مؤقت لمدة أسبوعين + منع دائم من صلاحيات الصور",
+"المخالفة الثانية: 5000RS / 50WB + إيقاف مؤقت لمدة أسبوعين",
+"المخالفة الثالثة: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"Blackmail",
+fr:"Chantage",
+ar:"الابتزاز"
+},
+
+punishments:{
+en:[
+"First offence: 2500R$ / 25WB + 1 weeks T.S",
+"Second offence: 4500R$ / 50WB + 1 month T.S",
+"Third offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : 2500R$ / 25WB + 1 semaine T.S",
+"Deuxième infraction : 4500R$ / 50WB + 1 mois T.S",
+"Troisième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: 2500R$ / 25WB + أسبوع T.S",
+"المخالفة الثانية: 4500R$ / 50WB + شهر T.S",
+"المخالفة الثالثة: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"Illegal Play",
+fr:"Jeu illégal",
+ar:"اللعب غير القانوني"
+},
+
+punishments:{
+en:[
+"First offence: 1200R$ / 12WB + 1 week Temporary Suspension",
+"Second offence: 3000R$ / 30WB + 1 month Temporary Suspension",
+"Third offence: Permanent Suspension"
+],
+fr:[
+"Première infraction : 1200R$ / 12WB + 1 semaine de suspension temporaire",
+"Deuxième infraction : 3000R$ / 30WB + 1 mois de suspension temporaire",
+"Troisième infraction : suspension permanente"
+],
+ar:[
+"المخالفة الأولى: 1200R$ / 12WB + إيقاف مؤقت لمدة أسبوع",
+"المخالفة الثانية: 3000R$ / 30WB + إيقاف مؤقت لمدة شهر",
+"المخالفة الثالثة: إيقاف دائم"
+]
+}
+
+},
+
+{
+reason:{
+en:"Faking NT",
+fr:"Fausse NT",
+ar:"تزوير NT"
+},
+
+punishments:{
+en:[
+"First offence: 1200R$ / 12WB + 2 Season NT Ban",
+"Second offence: Perm NT Ban"
+],
+fr:[
+"Première infraction : 1200R$ / 12WB + interdiction NT pendant 2 saisons",
+"Deuxième infraction : interdiction NT permanente"
+],
+ar:[
+"المخالفة الأولى: 1200R$ / 12WB + منع NT لمدة موسمين",
+"المخالفة الثانية: منع NT دائم"
+]
+}
+
+}
+
+];
+
+
+/* =====================================================
+   OFFENCES DATA
+===================================================== */
+
+const offenceData = [
+
+{
+code:"Y1*",
+type:"yellow",
+en:"FALSE KICK OFF",
+fr:"FAUX COUP D'ENVOI",
+ar:"ركلة بداية خاطئة",
+suspension:"N/A"
+},
+
+{
+code:"Y2",
+type:"yellow",
+en:"TIME WASTING",
+fr:"PERTE DE TEMPS",
+ar:"تضييع الوقت",
+suspension:"N/A"
+},
+
+{
+code:"Y3*",
+type:"yellow",
+en:"TAUNTING/CELEBRATING IN-FRONT OF OPPONENTS",
+fr:"PROVOCATION / CÉLÉBRATION DEVANT LES ADVERSAIRES",
+ar:"الاستفزاز / الاحتفال أمام الخصوم",
+suspension:"N/A"
+},
+
+{
+code:"Y4*",
+type:"yellow",
+en:"FAILURE TO COMPLY WITH 30 STUD RULE",
+fr:"NON-RESPECT DE LA RÈGLE DES 30 STUD",
+ar:"عدم احترام قاعدة 30 STUD",
+suspension:"N/A"
+},
+
+{
+code:"Y5",
+type:"yellow",
+en:"FAILURE TO COMPLY WITH REFEREE INSTRUCTIONS",
+fr:"NON-RESPECT DES INSTRUCTIONS DE L'ARBITRE",
+ar:"عدم الامتثال لتعليمات الحكم",
+suspension:"N/A"
+},
+
+{
+code:"Y6*",
+type:"yellow",
+en:"LEAVING LOCKERS WITHOUT PERMISSION",
+fr:"QUITTER LES LOCKERS SANS AUTORISATION",
+ar:"مغادرة غرف الملابس دون إذن",
+suspension:"N/A"
+},
+
+{
+code:"Y7*",
+type:"yellow",
+en:"LEAVING TECHNICAL AREA",
+fr:"QUITTER LA ZONE TECHNIQUE",
+ar:"مغادرة المنطقة التقنية",
+suspension:"N/A"
+},
+
+{
+code:"Y8",
+type:"yellow",
+en:"ABUSIVE LANGUAGE",
+fr:"LANGAGE ABUSIF",
+ar:"لغة مسيئة",
+suspension:"N/A"
+},
+
+{
+code:"Y9",
+type:"yellow",
+en:"INTENTIONALLY IGNORING THE REFEREE",
+fr:"IGNORER INTENTIONNELLEMENT L'ARBITRE",
+ar:"تجاهل الحكم عمداً",
+suspension:"N/A"
+},
+
+{
+code:"Y10",
+type:"yellow",
+en:"ADMIN ABUSE AS A PLAYER OR MANAGER",
+fr:"ABUS D'ADMINISTRATION EN TANT QUE JOUEUR OU MANAGER",
+ar:"إساءة استعمال صلاحيات الإدارة كلاعب أو مدير",
+suspension:"N/A"
+},
+
+{
+code:"Y11",
+type:"yellow",
+en:
+"TECHNICAL FOULS SUCH AS:<br>• USAGE OF GOALKEEPER TOOLS OUTSIDE THE PENALTY AREA<br>• BOOSTING WITHOUT GAINING AN ADVANTAGE",
+fr:
+"INFRACTIONS TECHNIQUES TELLES QUE :<br>• UTILISATION D'OUTILS DE GARDIEN EN DEHORS DE LA SURFACE<br>• BOOSTING SANS OBTENIR D'AVANTAGE",
+ar:
+"مخالفات تقنية مثل:<br>• استخدام أدوات حارس المرمى خارج منطقة الجزاء<br>• استعمال BOOST دون الحصول على أفضلية",
+suspension:"N/A"
+},
+
+{
+code:"Y12",
+type:"yellow",
+en:"ENTERING/LEAVING FIELD OF PLAY WITHOUT PERMISSION",
+fr:"ENTRER / QUITTER LE TERRAIN SANS AUTORISATION",
+ar:"دخول / مغادرة الملعب دون إذن",
+suspension:"N/A"
+},
+
+{
+code:"R1",
+type:"red",
+en:"RECEIVING A RED CARD FOR 2 YELLOW CARDS",
+fr:"RECEVOIR UN CARTON ROUGE POUR 2 CARTONS JAUNES",
+ar:"الحصول على بطاقة حمراء بسبب بطاقتين صفراوين",
+suspensionKey:"oneGame"
+},
+
+{
+code:"R2",
+type:"red",
+en:
+"TECHNICAL FOULS SUCH AS:<br>• GOALKEEPER HANDBALL OUTSIDE BOX<br>• BOOSTING TO GAIN AN MAJOR ADVANTAGE",
+fr:
+"INFRACTIONS TECHNIQUES TELLES QUE :<br>• MAIN DU GARDIEN EN DEHORS DE LA SURFACE<br>• BOOSTING POUR OBTENIR UN AVANTAGE MAJEUR",
+ar:
+"مخالفات تقنية مثل:<br>• لمسة يد لحارس المرمى خارج المنطقة<br>• استعمال BOOST للحصول على أفضلية majeure",
+suspensionKey:"oneGame"
+},
+
+{
+code:"R3",
+type:"red",
+en:"ILLEGAL SUBSTITUTIONS",
+fr:"REMPLACEMENTS ILLÉGAUX",
+ar:"تبديلات غير قانونية",
+suspensionKey:"oneGame"
+},
+
+{
+code:"R4",
+type:"red",
+en:"SEVERE ABUSIVE LANGUAGE",
+fr:"LANGAGE TRÈS ABUSIF",
+ar:"لغة مسيئة بشكل خطير",
+suspensionKey:"threeGames"
+},
+
+{
+code:"R5",
+type:"red",
+en:"USE OF OFFENSIVE LANGUAGE",
+fr:"UTILISATION D'UN LANGAGE OFFENSANT",
+ar:"استعمال لغة مسيئة",
+suspensionKey:"threeGames"
+},
+
+{
+code:"R6",
+type:"red",
+en:"DISCRIMINATORY LANGUAGE",
+fr:"LANGAGE DISCRIMINATOIRE",
+ar:"لغة تمييزية",
+suspensionKey:"threeGames"
+},
+
+{
+code:"R7",
+type:"red",
+en:
+"SERIOUS FOUL PLAY SUCH AS:<br>• CHEATING<br>• EXPLOITING<br>• MATCH RIGGING<br>• ADMIN ABUSE TO GAIN ADVANTAGE (:SPEED, :BTOOLS)<br>• ILLEGAL MODIFICATION TO PITCH",
+fr:
+"JEU GRAVEMENT RÉPRÉHENSIBLE TEL QUE :<br>• TRICHE<br>• EXPLOITATION DE BUGS<br>• MANIPULATION DE MATCH<br>• ABUS D'ADMINISTRATION POUR OBTENIR UN AVANTAGE (:SPEED, :BTOOLS)<br>• MODIFICATION ILLÉGALE DU TERRAIN",
+ar:
+"مخالفات خطيرة مثل:<br>• الغش<br>• استغلال الثغرات<br>• التلاعب بالمباراة<br>• إساءة استعمال الإدارة للحصول على أفضلية (:SPEED, :BTOOLS)<br>• تعديل غير قانوني للملعب",
+suspensionKey:"varies"
+}
+
+];
+
+
+/* =====================================================
+   CURRENT LANGUAGE
+===================================================== */
+
+let currentLang =
+localStorage.getItem("avlLanguage") || "en";
+
+
+/* =====================================================
+   RENDER SUSPENSIONS
+===================================================== */
+
+function renderSuspensions(){
+
+    const body =
+        document.getElementById("suspensionBody");
+
+    body.innerHTML = "";
+
+    suspensionData.forEach(item => {
+
+        const row =
+            document.createElement("tr");
+
+        const reason =
+            item.reason[currentLang];
+
+        const punishments =
+            item.punishments[currentLang];
+
+        let punishmentHTML = "";
+
+        punishments.forEach((text,index) => {
+
+            let cls = "first";
+
+            if(index === 1) cls = "second";
+            if(index === 2) cls = "third";
+
+            if(
+                punishments.length === 4 &&
+                index === 3
+            ){
+                cls = "third";
+            }
+
+            punishmentHTML +=
+                `<span class="${cls}">${text}</span>\n\n`;
+
+        });
+
+        row.innerHTML = `
+
+            <td class="reason">
+                ${reason.replaceAll("/", "<br>/ ")}
+            </td>
+
+            <td class="ban-content">
+                ${punishmentHTML}
+            </td>
+
+        `;
+
+        body.appendChild(row);
+
+    });
+
+}
+
+
+/* =====================================================
+   RENDER OFFENCES
+===================================================== */
+
+function renderOffences(){
+
+    const body =
+        document.getElementById("offenceBody");
+
+    body.innerHTML = "";
+
+    offenceData.forEach(item => {
+
+        const row =
+            document.createElement("tr");
+
+        let suspension = "N/A";
+
+        if(item.suspensionKey){
+
+            suspension =
+                translations[currentLang][
+                    item.suspensionKey
+                ];
+        }
+
+        row.innerHTML = `
+
+            <td>
+                <span class="code ${item.type}">
+                    ${item.code}
+                </span>
+            </td>
+
+            <td class="offense">
+                ${item[currentLang]}
+            </td>
+
+            <td class="${
+                suspension === "N/A"
+                ? "na"
+                : "suspension"
+            }">
+                ${suspension}
+            </td>
+
+        `;
+
+        body.appendChild(row);
+
+    });
+
+}
+
+
+/* =====================================================
+   APPLY LANGUAGE
+===================================================== */
+
+function applyLanguage(){
+
+    const lang =
+        translations[currentLang];
+
+    document.documentElement.lang =
+        currentLang;
+
+    if(currentLang === "ar"){
+
+        document.body.classList.add("rtl");
+
+        document.documentElement.dir =
+            "rtl";
+
+    }else{
+
+        document.body.classList.remove("rtl");
+
+        document.documentElement.dir =
+            "ltr";
+
+    }
+
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(element => {
+
+            const key =
+                element.dataset.i18n;
+
+            if(lang[key] !== undefined){
+
+                element.innerHTML =
+                    lang[key];
+
+            }
+
+        });
+
+
+    document
+        .querySelectorAll("[data-placeholder]")
+        .forEach(element => {
+
+            const key =
+                element.dataset.placeholder;
+
+            if(lang[key] !== undefined){
+
+                element.placeholder =
+                    lang[key];
+
+            }
+
+        });
+
+
+    document
+        .querySelectorAll(".lang-btn")
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.lang === currentLang
+            );
+
+        });
+
+
+    renderSuspensions();
+    renderOffences();
+
+}
+
+
+/* =====================================================
+   LANGUAGE BUTTONS
+===================================================== */
+
+document
+    .querySelectorAll(".lang-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                currentLang =
+                    button.dataset.lang;
+
+                localStorage.setItem(
+                    "avlLanguage",
+                    currentLang
+                );
+
+                applyLanguage();
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   ENTER PORTAL
+===================================================== */
+
+const intro =
+    document.getElementById("intro");
+
+const enterBtn =
+    document.getElementById("enterBtn");
+
+function enterPortal(){
+
+    intro.classList.add("hide");
+
+    setTimeout(() => {
+
+        intro.style.display = "none";
+
+    },1200);
+
+}
+
+enterBtn.addEventListener(
+    "click",
+    enterPortal
+);
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+const navButtons =
+    document.querySelectorAll(".nav-btn");
+
+const pages =
+    document.querySelectorAll(".page");
+
+navButtons.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const target =
+                button.dataset.page;
+
+            navButtons.forEach(btn => {
+
+                btn.classList.remove(
+                    "active"
+                );
+
+            });
+
+            button.classList.add("active");
+
+            pages.forEach(page => {
+
+                page.classList.remove(
+                    "active"
+                );
+
+            });
+
+            const targetPage =
+                document.getElementById(target);
+
+            if(targetPage){
+
+                targetPage.classList.add(
+                    "active"
+                );
+
+            }
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   SEARCH SUSPENSIONS
+===================================================== */
+
+document
+    .getElementById("suspensionSearch")
+    .addEventListener(
+        "input",
+        function(){
+
+            const query =
+                this.value
+                .toLowerCase()
+                .trim();
+
+            document
+                .querySelectorAll(
+                    "#suspensionBody tr"
+                )
+                .forEach(row => {
+
+                    row.style.display =
+                        row.innerText
+                        .toLowerCase()
+                        .includes(query)
+                        ? ""
+                        : "none";
+
+                });
+
+        }
+    );
+
+
+/* =====================================================
+   SEARCH OFFENCES
+===================================================== */
+
+document
+    .getElementById("offenceSearch")
+    .addEventListener(
+        "input",
+        function(){
+
+            const query =
+                this.value
+                .toLowerCase()
+                .trim();
+
+            document
+                .querySelectorAll(
+                    "#offenceBody tr"
+                )
+                .forEach(row => {
+
+                    row.style.display =
+                        row.innerText
+                        .toLowerCase()
+                        .includes(query)
+                        ? ""
+                        : "none";
+
+                });
+
+        }
+    );
+
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+
+const canvas =
+    document.getElementById("particles");
+
+const ctx =
+    canvas.getContext("2d");
+
+let particles = [];
+
+function resizeCanvas(){
+
+    canvas.width =
+        window.innerWidth;
+
+    canvas.height =
+        window.innerHeight;
+
+}
+
+resizeCanvas();
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+function createParticles(){
+
+    particles = [];
+
+    const count =
+        Math.min(
+            110,
+            Math.floor(
+                window.innerWidth *
+                window.innerHeight /
+                14000
+            )
+        );
+
+    for(let i=0;i<count;i++){
+
+        particles.push({
+
+            x:
+                Math.random() *
+                canvas.width,
+
+            y:
+                Math.random() *
+                canvas.height,
+
+            size:
+                Math.random() *
+                1.7 + .3,
+
+            speedX:
+                (Math.random()-.5)*.25,
+
+            speedY:
+                (Math.random()-.5)*.25,
+
+            alpha:
+                Math.random()*.45+.08
+
+        });
+
+    }
+
+}
+
+createParticles();
+
+
+function animateParticles(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    particles.forEach(p => {
+
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        if(p.x < 0)
+            p.x = canvas.width;
+
+        if(p.x > canvas.width)
+            p.x = 0;
+
+        if(p.y < 0)
+            p.y = canvas.height;
+
+        if(p.y > canvas.height)
+            p.y = 0;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+            `rgba(246,196,83,${p.alpha})`;
+
+        ctx.fill();
+
+    });
+
+    requestAnimationFrame(
+        animateParticles
+    );
+
+}
+
+animateParticles();
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+applyLanguage();
+
+
+/* ENTER WITH KEY */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key === "Enter" &&
+            !intro.classList.contains("hide")
+        ){
+
+            enterPortal();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
